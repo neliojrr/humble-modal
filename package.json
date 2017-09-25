@@ -1,0 +1,30 @@
+{
+  "name": "humble-modal",
+  "version": "1.0.0",
+  "description": "React simple and humble modal easy to use.",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neliojrr/humble-modal.git"
+  },
+  "keywords": [
+    "react",
+    "modal",
+    "simple",
+    "humble",
+    "easy"
+  ],
+  "author": "Nelio Carneiro <neliojrr@gmail.com> (http://nelio.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/neliojrr/humble-modal/issues"
+  },
+  "homepage": "https://github.com/neliojrr/humble-modal#readme",
+  "devDependencies": {
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1"
+  }
+}

@@ -11,9 +11,8 @@ export default class Modal extends Component {
       hover: false,
       show: false,
       title: "",
-      isLoading: false,
-      height: "100%",
-      width: "100%"
+      height: null,
+      width: null
     }
   }
 
@@ -25,18 +24,29 @@ export default class Modal extends Component {
     document.removeEventListener("keydown", this.handleKeyDown.bind(this));
   }
 
-  componentWillReceiveProps(nextProps) {
-    const show = nextProps.show;
-    const title = nextProps.title || "";
-    const isLoading = nextProps.isLoading;
-    const minWidth = nextProps.minWidth;
-    const width = nextProps.width;
+  componentDidMount() {
+    const show = this.props.show || false;
+    const title = this.props.title || "";
+    const width = this.props.width || null;
+    const height = this.props.height || null;
     this.setState({
       show,
       title,
-      isLoading,
-      minWidth,
-      width
+      width,
+      height
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const show = nextProps.show || false;
+    const title = nextProps.title || "";
+    const width = nextProps.width || null;
+    const height = nextProps.height || null;
+    this.setState({
+      show,
+      title,
+      width,
+      height
     });
   }
 
@@ -61,31 +71,25 @@ export default class Modal extends Component {
 
   render() {
     if(this.state.hover) {
-      styleButtonClose.opacity = 1;
+      defaultStyles.buttonClose.opacity = 1;
     }
     else {
-      styleButtonClose.opacity = 0.2;
+      defaultStyles.buttonClose.opacity = 0.2;
     }
 
     if(this.state.show) {
-      styleBackground.display = "flex";
+      defaultStyles.background.display = "flex";
     }
     else {
-      styleBackground.display = "none";
+      defaultStyles.background.display = "none";
     }
 
-    let showLoading = [];
-    if(this.state.isLoading) {
-      showLoading = (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center"
-          }}
-        >
-          Loading...
-        </div>
-      );
+    if(this.state.width) {
+      defaultStyles.content.width = this.state.width;
+    }
+
+    if(this.state.height) {
+      defaultStyles.content.height = this.state.height;
     }
 
     return(
@@ -107,17 +111,13 @@ export default class Modal extends Component {
             >
               <span className="closeModal">x</span>
             </button>
-            <h3 style={defaultStylesModalTitle}>{this.state.title}</h3>
+            <h3 style={defaultStyles.ModalTitle}>{this.state.title}</h3>
           </div>
           <div
-            style={{
-              ...defaultStyles.content,
-              width: this.state.width
-            }}
+            style={defaultStyles.content}
             className="modalContent"
           >
-            {this.state.isLoading && showLoading}
-            {!this.state.isLoading && this.props.children}
+            {this.props.children}
           </div>
         </div>
       </div>
@@ -129,18 +129,12 @@ Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   title: PropTypes.string,
-  isLoading: PropTypes.bool,
   height: PropTypes.string,
   width: PropTypes.string
 }
 
-Modal.defaultProps = {
-  isLoading: false,
-  title: ""
-}
-
 const defaultStyles = {
-  background = {
+  background: {
     position: "fixed",
     top: 0,
     left: 0,
@@ -148,9 +142,8 @@ const defaultStyles = {
     zIndex: 3000,
     height: "100%",
     width: "100%",
-    display: "none",
   },
-  modalDialog = {
+  modalDialog: {
     position: "flex",
     justifyContent: "center",
     backgroundColor: "white",
@@ -162,12 +155,12 @@ const defaultStyles = {
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
     overflowY: "auto"
   },
-  header = {
+  header: {
     minHeight: "16.43px",
     padding: "15px",
     borderBottom: "1px solid #e5e5e5"
   },
-  buttonClose = {
+  buttonClose: {
     float: "right",
     fontSize: "16px",
     fontWeight: "700",
@@ -177,13 +170,13 @@ const defaultStyles = {
     border: 0,
     background: 0
   },
-  modalTitle = {
+  modalTitle: {
     margin: 0,
     lineHeight: "1.4",
     fontSize: "16px",
     fontWeight: "600"
   },
-  content = {
+  content: {
     position: "relative",
     padding: "15px",
   }

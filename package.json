@@ -1,10 +1,12 @@
 {
   "name": "humble-modal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React simple and humble modal easy to use.",
-  "main": "./src/index.js",
+  "main": "./humble-modal.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "build": "webpack",
+    "start": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,15 @@
   },
   "homepage": "https://github.com/neliojrr/humble-modal#readme",
   "devDependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1"
+    "react": "^15.6.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^3.6.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "humble-modal",
   "version": "1.1.1",
-  "description": "React simple and humble modal easy to use.",
+  "description": "A React simple, humble and easy to use modal. No fancy props or behaviors.",
   "main": "./humble-modal.js",
   "scripts": {
     "test": "npm test",
@@ -12,8 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/neliojrr/humble-modal.git"
   },
+  "tags": [
+    "react"
+  ],
   "keywords": [
     "react",
+    "react-component",
     "modal",
     "simple",
     "humble",

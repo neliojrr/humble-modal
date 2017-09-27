@@ -11,8 +11,10 @@ export default class Modal extends Component {
       hover: false,
       show: false,
       title: "",
-      height: null,
-      width: null
+      height: "50vh",
+      width: "50vw",
+      contentAlign: "center",
+      titleAlign: "center"
     }
   }
 
@@ -27,41 +29,51 @@ export default class Modal extends Component {
   componentDidMount() {
     const show = this.props.show || false;
     const title = this.props.title || "";
-    const width = this.props.width || null;
-    const height = this.props.height || null;
+    const width = this.props.width || "50vw";
+    const height = this.props.height || "50vh";
+    const contentAlign = this.props.contentAlign || "center";
+    const titleAlign = this.props.titleAlign || "center";
     this.setState({
       show,
       title,
       width,
-      height
+      height,
+      contentAlign,
+      titleAlign
     });
   }
 
   componentWillReceiveProps(nextProps) {
     const show = nextProps.show || false;
     const title = nextProps.title || "";
-    const width = nextProps.width || null;
-    const height = nextProps.height || null;
+    const width = nextProps.width || "50vw";
+    const height = nextProps.height || "50vh";
+    const contentAlign = nextProps.contentAlign || "center";
+    const titleAlign = nextProps.titleAlign || "center";
     this.setState({
       show,
       title,
       width,
-      height
+      height,
+      contentAlign,
+      titleAlign
     });
   }
 
   handleKeyDown(event) {
     switch(event.keyCode) {
       case ESC_KEY:
-        this.props.onRequestClose();
+        this.props.onRequestClose(event);
         break;
       default:
         break;
     }
   }
 
-  onRequestClose(e) {
-    this.props.onRequestClose(e);
+  onRequestClose(event) {
+    if(event.target.className === "closeModal") {
+      this.props.onRequestClose(event);
+    }
   }
 
   hoverCloseButton(e) {
@@ -70,26 +82,14 @@ export default class Modal extends Component {
   }
 
   render() {
+    let newOpacity = 0.2;
     if(this.state.hover) {
-      defaultStyles.buttonClose.opacity = 1;
-    }
-    else {
-      defaultStyles.buttonClose.opacity = 0.2;
+      newOpacity = 1
     }
 
+    let newDisplay = "none";
     if(this.state.show) {
-      defaultStyles.background.display = "flex";
-    }
-    else {
-      defaultStyles.background.display = "none";
-    }
-
-    if(this.state.width) {
-      defaultStyles.content.width = this.state.width;
-    }
-
-    if(this.state.height) {
-      defaultStyles.content.height = this.state.height;
+      newDisplay = "flex";
     }
 
     return(
@@ -97,15 +97,15 @@ export default class Modal extends Component {
         id="backgroundModal"
         className="closeModal"
         onClick={this.onRequestClose.bind(this)}
-        style={defaultStyles.background}
+        style={{...defaultStyles.background, display: newDisplay}}
       >
         <div style={defaultStyles.modalDialog}>
-          <div style={defaultStyles.header}>
+          <div style={{...defaultStyles.header, textAlign: this.state.titleAlign}}>
             <button
               onMouseEnter={this.hoverCloseButton.bind(this)}
               onMouseLeave={this.hoverCloseButton.bind(this)}
               onClick={this.onRequestClose.bind(this)}
-              style={defaultStyles.buttonClose}
+              style={{...defaultStyles.buttonClose, opacity: newOpacity}}
               type="button"
               className="closeModal"
             >
@@ -114,7 +114,12 @@ export default class Modal extends Component {
             <h3 style={defaultStyles.ModalTitle}>{this.state.title}</h3>
           </div>
           <div
-            style={defaultStyles.content}
+            style={{
+              ...defaultStyles.content,
+              width: this.state.width,
+              height: this.state.height,
+              textAlign: this.state.contentAlign
+            }}
             className="modalContent"
           >
             {this.props.children}
@@ -130,7 +135,9 @@ Modal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   height: PropTypes.string,
-  width: PropTypes.string
+  width: PropTypes.string,
+  contentAlign: PropTypes.string,
+  titleAlign: PropTypes.string
 }
 
 const defaultStyles = {
@@ -157,7 +164,8 @@ const defaultStyles = {
   },
   header: {
     minHeight: "16.43px",
-    padding: "15px",
+    paddingLeft: "15px",
+    paddingRight: "15px",
     borderBottom: "1px solid #e5e5e5"
   },
   buttonClose: {
@@ -166,18 +174,18 @@ const defaultStyles = {
     fontWeight: "700",
     lineHeight: 1,
     textShadow: "0 1px 0 #fff",
-    opacity: .2,
     border: 0,
-    background: 0
+    background: 0,
+    cursor: "pointer"
   },
   modalTitle: {
     margin: 0,
     lineHeight: "1.4",
     fontSize: "16px",
-    fontWeight: "600"
+    fontWeight: "600",
   },
   content: {
     position: "relative",
-    padding: "15px",
+    padding: "15px"
   }
 }

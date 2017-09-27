@@ -24,18 +24,17 @@ render() {
 ~~~
 
 
-## API
-- `show`: true or false. -- <i>is required</i>
-- `onRequestClose`: function requested for the Modal to close itself. 
-It happens when click on the close button (`x`), out of the modal or type ESC. 
--- <i>is required</i>
-- `title`: Title of the Modal. Default: `null`
-- `height`: Height of the Modal. Accepts any CSS statements. E.g.: `140px`, `3em`
-- `width`: Width of the Modal. Accepts any CSS statements. E.g.: `140px`, `3em`
-- `contentAlign`: Align of the content inside the Modal. E.g.: `right`, `left`.
-Default `center`.
-- `titleAlign`: Align of the title of the Modal. E.g.: `right`, `left`.
-Default `center`.
+## Props
+|Prop|Type|Required|Default|
+|----|----|--------|-------|
+|show|boolean|true|        |
+|onRequestClose|function|true|  |
+|title|string|false|""|
+|height|string|false|"50vh"|
+|width|string|false|"50vw"|
+|contentAlign|string|false|"center"|
+|titleAlign|string|false|"center"|
+
 
 ## Full Example
 ~~~jsx

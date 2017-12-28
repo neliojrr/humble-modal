@@ -10,11 +10,6 @@ export default class Modal extends Component {
     this.state = {
       hover: false,
       show: false,
-      title: "",
-      height: "50vh",
-      width: "50vw",
-      contentAlign: "center",
-      titleAlign: "center"
     }
   }
 
@@ -24,40 +19,6 @@ export default class Modal extends Component {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-  }
-
-  componentDidMount() {
-    const show = this.props.show || false;
-    const title = this.props.title || "";
-    const width = this.props.width || "50vw";
-    const height = this.props.height || "50vh";
-    const contentAlign = this.props.contentAlign || "center";
-    const titleAlign = this.props.titleAlign || "center";
-    this.setState({
-      show,
-      title,
-      width,
-      height,
-      contentAlign,
-      titleAlign
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const show = nextProps.show || false;
-    const title = nextProps.title || "";
-    const width = nextProps.width || "50vw";
-    const height = nextProps.height || "50vh";
-    const contentAlign = nextProps.contentAlign || "center";
-    const titleAlign = nextProps.titleAlign || "center";
-    this.setState({
-      show,
-      title,
-      width,
-      height,
-      contentAlign,
-      titleAlign
-    });
   }
 
   handleKeyDown(event) {
@@ -88,7 +49,7 @@ export default class Modal extends Component {
     }
 
     let newDisplay = "none";
-    if(this.state.show) {
+    if(this.props.show) {
       newDisplay = "flex";
     }
 
@@ -100,7 +61,7 @@ export default class Modal extends Component {
         style={{...defaultStyles.background, display: newDisplay}}
       >
         <div style={defaultStyles.modalDialog}>
-          <div style={{...defaultStyles.header, textAlign: this.state.titleAlign}}>
+          <div style={{...defaultStyles.header, textAlign: this.props.titleAlign}}>
             <button
               onMouseEnter={this.hoverCloseButton.bind(this)}
               onMouseLeave={this.hoverCloseButton.bind(this)}
@@ -111,14 +72,18 @@ export default class Modal extends Component {
             >
               <span className="closeModal">x</span>
             </button>
-            <h3 style={defaultStyles.ModalTitle}>{this.state.title}</h3>
+            <h3
+              style={this.props.titleStyle || defaultStyles.ModalTitle}
+            >
+              {this.props.title}
+            </h3>
           </div>
           <div
             style={{
               ...defaultStyles.content,
-              width: this.state.width,
-              height: this.state.height,
-              textAlign: this.state.contentAlign
+              width: this.props.width,
+              height: this.props.height,
+              textAlign: this.props.contentAlign
             }}
             className="modalContent"
           >

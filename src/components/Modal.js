@@ -102,8 +102,18 @@ Modal.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
   contentAlign: PropTypes.string,
-  titleAlign: PropTypes.string
-}
+  titleAlign: PropTypes.string,
+  titleStyle: PropTypes.object
+};
+
+Modal.defaultProps = {
+  title: "",
+  height: "50vh",
+  width: "50vw",
+  contentAlign: "center",
+  titleAlign: "center",
+  titleStyle: null
+};
 
 const defaultStyles = {
   background: {

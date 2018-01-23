@@ -30,10 +30,12 @@ render() {
 |show|boolean|true|        |
 |onRequestClose|function|true|  |
 |title|string|false|""|
-|height|string|false|"50vh"|
-|width|string|false|"50vw"|
-|contentAlign|string|false|"center"|
-|titleAlign|string|false|"center"|
+|noHeader|boolean|false|false|
+|titleStyle|object|false|  |
+|backgroundStyle|object|false|  |
+|modalWindowStyle|object|false|  |
+|headerStyle|object|false|  |
+|contentStyle|object|false|  |
 
 
 ## Full Example
@@ -70,8 +72,6 @@ class App extends Component {
           show={this.state.show}
           onRequestClose={this.onRequestClose.bind(this)}
           title="This is a humble modal"
-          titleAlign="left"
-          contentAlign="left"
         >
           <div>Testing this simple modal</div>
         </Modal>

@@ -68,7 +68,7 @@ export default class Modal extends Component {
         style={{ ...background, display: newDisplay }}
       >
         <div style={ modalWindowStyle }>
-          <div style={{ ...headerStyle, textAlign: this.props.titleAlign }}>
+          <div style={{ ...headerStyle, display: this.props.noHeader ? "none" : "" }}>
             <button
               onMouseEnter={ this.hoverCloseButton.bind(this) }
               onMouseLeave={ this.hoverCloseButton.bind(this) }
@@ -161,6 +161,7 @@ const defaultStyles = {
     position: "relative",
     border: "15px solid white",
     height: "50vh",
-    overflowY: "auto"
+    overflowY: "auto",
+    borderRadius: "4px"
   }
 }

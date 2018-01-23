@@ -53,41 +53,42 @@ export default class Modal extends Component {
       newDisplay = "flex";
     }
 
+    const background = this.props.backgroundStyle || defaultStyles.background;
+    const modalWindowStyle = this.props.modalWindowStyle || defaultStyles.modalDialog;
+    const headerStyle = this.props.headerStyle || defaultStyles.header;
+    const titleStyle = this.props.titleStyle || defaultStyles.modalTitle;
+    const contentStyle = this.props.contentStyle || defaultStyles.content;
+    const noHeader = this.props.noHeader || false;
+
     return(
       <div
         id="backgroundModal"
         className="closeModal"
-        onClick={this.onRequestClose.bind(this)}
-        style={{...defaultStyles.background, display: newDisplay}}
+        onClick={ this.onRequestClose.bind(this) }
+        style={{ ...background, display: newDisplay }}
       >
-        <div style={defaultStyles.modalDialog}>
-          <div style={{...defaultStyles.header, textAlign: this.props.titleAlign}}>
+        <div style={ modalWindowStyle }>
+          <div style={{ ...headerStyle, textAlign: this.props.titleAlign }}>
             <button
-              onMouseEnter={this.hoverCloseButton.bind(this)}
-              onMouseLeave={this.hoverCloseButton.bind(this)}
-              onClick={this.onRequestClose.bind(this)}
-              style={{...defaultStyles.buttonClose, opacity: newOpacity}}
+              onMouseEnter={ this.hoverCloseButton.bind(this) }
+              onMouseLeave={ this.hoverCloseButton.bind(this) }
+              onClick={ this.onRequestClose.bind(this) }
+              style={{ ...defaultStyles.buttonClose, opacity: newOpacity }}
               type="button"
               className="closeModal"
             >
               <span className="closeModal">x</span>
             </button>
             <h3
-              style={this.props.titleStyle || defaultStyles.ModalTitle}
+              style={ titleStyle }
             >
               {this.props.title}
             </h3>
           </div>
           <div
-            style={{
-              ...defaultStyles.content,
-              width: this.props.width,
-              height: this.props.height,
-              textAlign: this.props.contentAlign
-            }}
-            className="modalContent"
+            style={ contentStyle }
           >
-            {this.props.children}
+            { this.props.children }
           </div>
         </div>
       </div>
@@ -99,20 +100,17 @@ Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   title: PropTypes.string,
-  height: PropTypes.string,
-  width: PropTypes.string,
-  contentAlign: PropTypes.string,
-  titleAlign: PropTypes.string,
-  titleStyle: PropTypes.object
+  titleStyle: PropTypes.object,
+  backgroundStyle: PropTypes.object,
+  modalWindowStyle: PropTypes.object,
+  headerStyle: PropTypes.object,
+  contentStyle: PropTypes.object,
+  noHeader: PropTypes.bool
 };
 
 Modal.defaultProps = {
   title: "",
-  height: "50vh",
-  width: "50vw",
-  contentAlign: "center",
-  titleAlign: "center",
-  titleStyle: null
+  noHeader: false
 };
 
 const defaultStyles = {
@@ -135,12 +133,12 @@ const defaultStyles = {
     borderRadius: "4px",
     zIndex: 4000,
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
-    overflowY: "auto"
+    width: "50vw",
   },
   header: {
+    position: "relative",
     minHeight: "16.43px",
-    paddingLeft: "15px",
-    paddingRight: "15px",
+    padding: "15px",
     borderBottom: "1px solid #e5e5e5"
   },
   buttonClose: {
@@ -161,6 +159,8 @@ const defaultStyles = {
   },
   content: {
     position: "relative",
-    padding: "15px"
+    border: "15px solid white",
+    height: "50vh",
+    overflowY: "auto"
   }
 }
